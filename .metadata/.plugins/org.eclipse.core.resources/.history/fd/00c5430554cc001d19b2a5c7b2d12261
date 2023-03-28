@@ -1,0 +1,52 @@
+package com.backendadmin.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+@Entity
+public class Subject {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(unique=true)
+	private String name;
+//	
+//	@OneToMany
+//	@JoinColumn(name="teacher_id")
+//	private Teacher teacher;
+//	
+//	@JoinColumn(name="standard_id")
+//	private Standard standard;
+
+	//getters and setters
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	//constructors
+	public Subject() {}
+	public Subject(String name) {
+		this.name = name;
+	}
+	
+	
+}

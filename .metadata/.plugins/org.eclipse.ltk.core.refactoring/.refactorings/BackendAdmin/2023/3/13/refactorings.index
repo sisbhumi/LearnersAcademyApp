@@ -1,0 +1,24 @@
+1679818415276	Rename resource 'book.hbm.xml'
+1679818745520	Rename local variable 'std'
+1679823295620	Delete element
+1679826354932	Rename resource 'Standard.java'
+1679835118919	Copy file
+1679835728158	Delete element
+1679884583140	Rename field 'id'
+1679884910087	Rename field 'stu_id'
+1679886836371	Delete element
+1679907792257	Rename resource 'student.config.xml'
+1679907806889	Move 'context.xml' to 'META-INF'
+1679907814061	Delete element
+1679908297222	Encapsulate field 'teacher'
+1679908393636	Encapsulate field 'student'
+1679908913971	Delete element
+1679909379295	Copy file
+1679909507649	Rename local variable 'students'
+1679910341714	Copy file
+1679911168500	Copy file
+1679912623644	Delete element
+1679912634039	Delete elements
+1679912672495	Delete element
+1679913109069	Delete element
+1679913117438	Rename resource 'context1.xml'

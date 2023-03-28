@@ -1,0 +1,99 @@
+package com.backendadmin.servlets;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import com.backendadmin.domain.ClassRoom;
+import com.backendadmin.domain.Student;
+import com.backendadmin.domain.Subject;
+import com.backendadmin.domain.Teacher;
+import com.backendadmin.utils.HibernateUtil;
+
+@WebServlet("/addClass") 
+public class AddClassServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	
+	@Resource(name = "jdbc/schoolAdmin")
+	private DataSource datasource;
+	private StudentdataUtil studentDataUtil;
+	
+	public void init(ServletConfig config) throws ServletException {
+		
+		try {
+			studentDataUtil = new StudentdataUtil(datasource);
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String studentId = request.getParameter("studentId");
+		int id = Integer.parseInt(studentId);
+		
+		studentDataUtil.deleteStudent(id);
+		request.setAttribute("student_list", studentDataUtil.getStudents());
+
+		RequestDispatcher d = request.getRequestDispatcher("/showstudent.jsp");
+		d.forward(request, response);
+	}
+	
+	
+	private ClassRoom class_room;
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		Session session = HibernateUtil.getSessionfactory().openSession();
+		org.hibernate.Transaction transaction =  session.beginTransaction();
+		
+		int name = Integer.parseInt( request.getParameter("class_name"));
+//		class_room = new ClassRoom(name);
+		
+		Subject sub = new Subject("Hindi");
+		Teacher tech = new Teacher("Rakesh Mahajan");
+		ClassRoom cr = new ClassRoom(1);
+		Student st = new Student("Venu Gopal","vg@gmail.com");
+		
+		tech.setSubjects(sub);
+		sub.setClassroom(cr);
+		st.setClassroom(cr);
+		
+		
+		
+		session.save(class_room);
+		session.getTransaction().commit();
+		
+		Query q = session.createQuery("from ClassRoom");
+		List<ClassRoom> class_list = q.list() ;
+
+		for( ClassRoom b:class_list) {
+			System.out.println(b.getName());
+		}
+		
+		System.out.println(class_list);
+		
+		session.close();
+		
+		
+		request.setAttribute("class_list", class_list);
+		RequestDispatcher d = request.getRequestDispatcher("/showclass.jsp");
+		d.include(request, response);
+
+	}
+
+}
+

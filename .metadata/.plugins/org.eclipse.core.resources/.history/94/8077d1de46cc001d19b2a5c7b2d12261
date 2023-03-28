@@ -1,0 +1,82 @@
+package com.backendadmin.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import com.backendadmin.domain.ClassRoom;
+import com.backendadmin.domain.Student;
+import com.backendadmin.utils.HibernateUtil;
+
+@WebServlet("/addStudent") 
+public class AddStudentServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	private Student student;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		Session session = HibernateUtil.getSessionfactory().openSession();
+
+		org.hibernate.Transaction transaction =  session.beginTransaction();
+		
+		
+		String name = request.getParameter("stu_name");
+		String stndrd = request.getParameter("stu_class");
+		int classroom = Integer.parseInt(stndrd);
+		PrintWriter out = response.getWriter();
+		ClassRoom classRoom ;
+		
+		Query c = session.createQuery("from ClassRoom where id = :classRoom_id");
+		c.setParameter("classRoom_id", classroom);
+		
+		if(c.list().isEmpty()) {
+			classRoom = new ClassRoom(classroom);
+			out.write("Please ENTER valid classroom");
+		}
+		else
+			classRoom = session.get(ClassRoom.class, classroom);
+		
+//		classRoom = (ClassRoom) c.getSingleResult();
+		
+		student = new Student(name,classRoom);
+		
+		session.persist(student);
+		
+		session.getTransaction().commit();
+		
+		Query q = session.createQuery("from Student");
+		
+		List<Student> stu_list = q.list() ;
+
+		for( Student b:stu_list) {
+			System.out.println(b.getName());
+		}
+		
+		session.close();
+		
+		request.setAttribute("student_list", stu_list);
+
+		RequestDispatcher d = request.getRequestDispatcher("/showstudent.jsp");
+		d.include(request, response);
+		
+
+	}
+
+}

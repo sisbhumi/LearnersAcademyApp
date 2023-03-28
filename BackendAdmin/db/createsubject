@@ -1,0 +1,6 @@
+use schooladmin;
+create table subject(
+	 id int AUTO_INCREMENT PRIMARY KEY,
+	 sub_name varchar(25)
+);
+	

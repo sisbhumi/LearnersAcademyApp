@@ -1,0 +1,5 @@
+package com.backendadmin.utils;
+
+public class HibernateUtil {
+
+}

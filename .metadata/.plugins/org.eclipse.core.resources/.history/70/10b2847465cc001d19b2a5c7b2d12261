@@ -1,0 +1,32 @@
+package com.backendadmin.main;
+
+import org.hibernate.Session;
+
+import com.backendadmin.domain.ClassRoom;
+import com.backendadmin.domain.Student;
+import com.backendadmin.domain.Subject;
+import com.backendadmin.domain.Teacher;
+import com.backendadmin.utils.HibernateUtil;
+
+public class appMain {
+	
+	public static void main(String args[]) {
+
+		Session session = HibernateUtil.getSessionfactory().openSession();
+		org.hibernate.Transaction transaction =  session.beginTransaction();
+		Subject sub = new Subject("Hindi");
+		Teacher tech = new Teacher("Rakesh Mahajan");
+		ClassRoom cr = new ClassRoom(1);
+		Student st = new Student("Venu Gopal","vg@gmail.com");
+		
+		tech.setSubjects(sub);
+		sub.setClassroom(cr);
+		st.setClassroom(cr);
+		
+		
+		
+		session.save(cr);
+		
+		session.getTransaction().commit();
+	}
+}

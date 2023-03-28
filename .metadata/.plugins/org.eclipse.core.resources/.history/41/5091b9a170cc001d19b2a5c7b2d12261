@@ -1,0 +1,53 @@
+package com.backendadmin.domain;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+@Entity
+public class ClassRoom {
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY )
+	private int id;
+	
+	@Column(unique = true)
+	private int name;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinTable(name="student",joinColumns=@JoinColumn(name="class_id"), inverseJoinColumns=@JoinColumn(name="stu_id"))
+	private Set<Student> student = new HashSet<Student>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinTable(name="subject",joinColumns=@JoinColumn(name="class_id"), inverseJoinColumns=@JoinColumn(name="sub_id"))
+	private Set<Subject> subjects = new HashSet<Subject>();
+
+	@ManyToMany(cascade=CascadeType.ALL)
+	private Set<Teacher> teachr =new HashSet<>();
+	
+	public int getName() {
+		return name;
+	}
+
+	public void setName(int name) {
+		this.name = name;
+	}
+
+	public ClassRoom() {}
+	
+	public ClassRoom(int name) {
+		
+		this.name = name;
+	}	
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Subjects</title>
+</head>
+<body>
+	<form action="addStudent" method="post">
+		<table>
+			<tr>
+				<th>Subject Name</th>
+				<th><input type="text" name="sub_name" /></th>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

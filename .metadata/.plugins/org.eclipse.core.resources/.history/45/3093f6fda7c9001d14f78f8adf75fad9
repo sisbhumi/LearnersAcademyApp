@@ -1,0 +1,5 @@
+package com.backendadmin.domain;
+
+public class Subject {
+
+}

@@ -1,0 +1,5 @@
+package com.backendadmin.servlets;
+
+public class AddClassServlet {
+
+}

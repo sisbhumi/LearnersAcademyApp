@@ -1,0 +1,54 @@
+package com.backendadmin.servlets;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import com.backendadmin.domain.ClassRoom;
+import com.backendadmin.domain.Student;
+import com.backendadmin.domain.Subject;
+import com.backendadmin.domain.Teacher;
+import com.backendadmin.utils.HibernateUtil;
+import com.backendadmin.utils.StudentdataUtil;
+import com.backendadmin.utils.SubjectUtil;
+
+@WebServlet("/addClass") 
+public class AddClassServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	
+	@Resource(name = "jdbc/schooladmin")
+	private DataSource datasource;
+	private SubjectUtil subjectUtil;
+	
+	public void init(ServletConfig config) throws ServletException {
+		
+		try {
+			subjectUtil = new SubjectUtil(datasource);
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setAttribute("student_list", subjectUtil.getSubject());
+
+		RequestDispatcher d = request.getRequestDispatcher("/showstudent.jsp");
+		d.forward(request, response);
+	}
+	
+}
+

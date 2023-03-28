@@ -1,0 +1,63 @@
+package com.backendadmin.servlets;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import com.backendadmin.domain.ClassRoom;
+import com.backendadmin.utils.HibernateUtil;
+
+@WebServlet("/addClass") 
+public class AddClassServlet extends HttpServlet {
+
+
+	private static final long serialVersionUID = 1L;
+
+	private ClassRoom class_room;
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		Session session = HibernateUtil.getSessionfactory().openSession();
+
+		org.hibernate.Transaction transaction =  session.beginTransaction();
+		
+		
+		int name = Integer.parseInt( request.getParameter("class_name"));
+		
+		
+		class_room = new ClassRoom(name);
+		
+		session.save(class_room);
+		
+		session.getTransaction().commit();
+		
+		Query q = session.createQuery("from ClassRoom");
+		
+		List<ClassRoom> class_list = q.list() ;
+
+		for( ClassRoom b:class_list) {
+			System.out.println(b.getName());
+		}
+		
+		System.out.println(class_list);
+		session.close();
+		
+		request.setAttribute("class_list", class_list);
+
+		RequestDispatcher d = request.getRequestDispatcher("/showclass.jsp");
+		d.include(request, response);
+
+	}
+
+}
+

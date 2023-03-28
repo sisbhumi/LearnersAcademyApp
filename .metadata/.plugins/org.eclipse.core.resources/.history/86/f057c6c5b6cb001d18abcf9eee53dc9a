@@ -1,0 +1,66 @@
+package com.backendadmin.servlets;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import com.backendadmin.domain.Standard;
+import com.backendadmin.domain.Student;
+import com.backendadmin.domain.Teacher;
+import com.backendadmin.utils.HibernateUtil;
+
+@WebServlet("/addTeacher") 
+public class AddTeacherServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	private Teacher teacher;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		Session session = HibernateUtil.getSessionfactory().openSession();
+
+		org.hibernate.Transaction transaction =  session.beginTransaction();
+
+		String name = request.getParameter("teacher_name");
+		String stndrd = request.getParameter("class");
+		
+		teacher = new Teacher(name,stndrd);
+		
+		session.save(teacher);
+		
+		session.getTransaction().commit();
+		
+		Query q = session.createQuery("from Teacher");
+		
+		List<Student> stu_list = q.list() ;
+
+		for( Student b:stu_list) {
+			System.out.println(b.getName());
+		}
+		
+		session.close();
+		
+		request.setAttribute("teacher_list", stu_list);
+
+		RequestDispatcher d = request.getRequestDispatcher("/showstudent.jsp");
+		d.include(request, response);
+		
+
+	}
+
+}

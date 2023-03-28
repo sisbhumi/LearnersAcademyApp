@@ -1,0 +1,6 @@
+use schooladmin;
+create table teahcer(
+	 id int AUTO_INCREMENT PRIMARY KEY,
+	 teahcer_name varchar(25),
+	 teacher_email varchar(25)
+);

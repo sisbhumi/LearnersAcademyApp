@@ -1,0 +1,85 @@
+package com.backendadmin.domain;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
+public class Subject {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(unique=true)
+	private String name;
+	
+	@OneToMany(mappedBy="Subject")
+	private Set<Teacher> teacher = new HashSet<>();
+	
+	@ManyToOne
+	@JoinColumn(name="classroom_id")
+	private ClassRoom classroom ;
+	
+	@ManyToMany(mappedBy="Subject")
+	private Set<Student> students = new HashSet<>(); 
+
+	public Set<Teacher> getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Set<Teacher> teacher) {
+		this.teacher = teacher;
+	}
+
+
+	public ClassRoom getClassroom() {
+		return classroom;
+	}
+
+	public void setClassroom(ClassRoom classroom) {
+		this.classroom = classroom;
+	}
+
+	public Set<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
+	}
+
+	//getters and setters
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	//constructors
+	public Subject() {}
+	public Subject(String name) {
+		this.name = name;
+	}
+	
+	
+}

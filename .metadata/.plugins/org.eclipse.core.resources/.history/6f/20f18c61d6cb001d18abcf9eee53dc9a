@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Class</title>
+</head>
+<body>
+	<form action="addClass" method="post">
+		
+		Class Name <input type="text" name="class_name" />
+		<input type="submit" name="add"/>
+
+	</form>
+</body>
+</html>

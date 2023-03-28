@@ -1,0 +1,61 @@
+package com.backendadmin.servlets;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import com.backendadmin.domain.Subject;
+import com.backendadmin.domain.Teacher;
+import com.backendadmin.utils.HibernateUtil;
+
+@WebServlet("/addSubject")
+public class AddSubjectServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Session session = HibernateUtil.getSessionfactory().openSession();
+		org.hibernate.Transaction transaction =  session.beginTransaction();
+
+		String name = request.getParameter("sub_name");
+		
+		Subject subject = new Subject(name);
+		
+		session.save(subject);
+		
+		session.getTransaction().commit();
+		
+		Query q = session.createQuery("from Subject");
+		
+		List<Subject> subject_list = q.list() ;
+
+		for( Subject b: subject_list) {
+			System.out.println(b.getName());
+		}
+		
+		Query s = session.createQuery("from Student ")
+		session.close();
+		
+		request.setAttribute("subject_list", subject_list);
+
+		RequestDispatcher d = request.getRequestDispatcher("/showsubject.jsp");
+		d.include(request, response);
+		
+	}
+
+}

@@ -1,0 +1,65 @@
+package com.backendadmin.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+
+import com.backendadmin.domain.Student;
+import com.backendadmin.utils.HibernateUtil;
+
+`
+
+
+@WebServlet("/addBook") 
+public class AddStudentServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	private Student student;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		Session session = HibernateUtil.getSessionfactory().openSession();
+
+		org.hibernate.Transaction transaction =  session.beginTransaction();
+
+		String name = request.getParameter("name");
+		String stndrd = request.getParameter("std");
+		
+		Student student = new Student(name, stndrd);
+		
+		session.save(book);
+		
+		session.getTransaction().commit();
+		
+		Query q = session.createQuery("from Book");
+//		book = session.get(Book.class, 1 );
+		
+		List<Book> bookList = q.list() ;
+
+		for( Book b:bookList) {
+			System.out.println(b.getName());
+		}
+		
+		session.close();
+		
+		request.setAttribute("book_list", bookList);
+
+		RequestDispatcher d = request.getRequestDispatcher("/addbook.jsp");
+		d.include(request, response);
+		
+
+	}
+
+}

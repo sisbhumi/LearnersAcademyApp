@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Student Admin</title>
+</head>
+<body>
+	<form action="">
+		<table>
+			<tr>
+				<th>Student Name</th>
+				<th><input type="text" name="stu_name" /></th>
+			</tr>
+
+			<tr>
+				<th>Class</th>
+				<th><input type="text" name="stu_class" /></th>
+			</tr>
+
+		</table>
+
+	</form>
+</body>
+</html>

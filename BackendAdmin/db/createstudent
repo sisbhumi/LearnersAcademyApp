@@ -1,0 +1,6 @@
+use schooladmin
+
+create table student (
+	name varchar(25),
+	email varchr(25)
+)
