@@ -36,8 +36,11 @@ public class SubjectUtil {
 			stmt = con.createStatement();
 			ResultSet resultset = stmt.executeQuery("Select * from subject order by id");
 			while (resultset.next()) {
-				String name = resultset.getString("name");
-				Subject subject = new Subject(name);
+				
+				int id = resultset.getInt("id");  
+				String name = resultset.getString("sub_name");
+				String clss = resultset.getString("class");
+				Subject subject = new Subject(id,name,clss);
 				subjects.add(subject);
 
 			}

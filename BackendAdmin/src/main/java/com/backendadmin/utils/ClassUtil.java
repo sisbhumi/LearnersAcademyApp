@@ -37,8 +37,9 @@ public class ClassUtil {
 			stmt = con.createStatement();
 			ResultSet resultset = stmt.executeQuery("Select * from class order by id");
 			while (resultset.next()) {
+				int id = resultset.getInt("id");
 				String name = resultset.getString("classname");
-				ClassRoom classR = new ClassRoom(name);
+				ClassRoom classR = new ClassRoom(id,name);
 				classes.add(classR);
 
 			}

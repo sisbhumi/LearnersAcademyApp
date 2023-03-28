@@ -33,11 +33,12 @@ public class TeacherUtil {
 
 			con = this.datasource.getConnection();
 			stmt = con.createStatement();
-			ResultSet resultset = stmt.executeQuery("Select * from teacher order by id");
+			ResultSet resultset = stmt.executeQuery("Select * from teahcer order by id");
 			while (resultset.next()) {
-				String name = resultset.getString("name");
-				String email = resultset.getString("email");
-				Teacher teacher = new Teacher(name, email);
+				int id = resultset.getInt("id");
+				String name = resultset.getString("teahcer_name");
+				String email = resultset.getString("teacher_email");
+				Teacher teacher = new Teacher(id,name, email);
 				teachers.add(teacher);
 
 			}

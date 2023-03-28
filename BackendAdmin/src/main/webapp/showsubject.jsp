@@ -12,12 +12,14 @@
 		<tr>
 			<th>Id</th>
 			<th>Students</th>
+			<th>Class</th>
 		</tr>
 		
 		<c:forEach var="subject" items="${subject_list}">
 			<tr>
 				<td>${subject.getId()}</td>
-				<td>${subject.getName()}</td> 
+				<td>${subject.getName()}</td>
+				<td>${subject.getClassroom()}</td> 
 				
 			</tr>
 			

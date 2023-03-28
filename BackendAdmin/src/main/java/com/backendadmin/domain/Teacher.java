@@ -20,7 +20,32 @@ public class Teacher {
 	private int teacher_id;
 	private String email;
 	private String name;
+	private String clss;
+	private String subject;
 	
+	public Teacher(int id, String name, String email) {
+		
+		this.teacher_id =id;
+		this.email = email;
+		this.name = name;
+	}
+
+	public int getTeacher_id() {
+		return teacher_id;
+	}
+
+	public void setTeacher_id(int teacher_id) {
+		this.teacher_id = teacher_id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	private Set<Student> student = new HashSet<>();
 	
 	private ClassRoom classroom ;
@@ -47,12 +72,6 @@ public class Teacher {
 	public Teacher(String name) {
 		this.name = name;
 	}
-
-	public Teacher(String name2, String email) {
-		this.name = name2;
-		this.email=email;
-	}
-
 	public ClassRoom getClassroom() {
 		return classroom;
 	}

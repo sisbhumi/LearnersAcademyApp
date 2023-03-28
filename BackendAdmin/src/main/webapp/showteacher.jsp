@@ -10,13 +10,16 @@
 <body>
 	<table border="2">
 		<tr>
-			<th>Teacher</th>
+			<th>Id</th>
+			<th>Teacher Name</th>
+			<th>Email</th>
 		</tr>
 		
-		<c:forEach var="teacher" items="${teacher_list}">
+		<c:forEach var="teahcer" items="${teacher_list}">
 			<tr>
-
-				<td>${teacher.getName()}</td> 
+				<td>${teahcer.getTeacher_id()}</td>
+				<td>${teahcer.getName()}</td> 
+				<td>${teahcer.getEmail()}</td>
 				
 			</tr>
 			

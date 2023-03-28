@@ -47,8 +47,8 @@ public class ClassRoom {
 
 	public ClassRoom() {}
 	
-	public ClassRoom(String name) {
-		
+	public ClassRoom(int id2, String name) {
+		this.id= id2;
 		this.name = name;
 	}
 

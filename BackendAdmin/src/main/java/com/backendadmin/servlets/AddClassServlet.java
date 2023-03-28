@@ -69,7 +69,7 @@ public class AddClassServlet extends HttpServlet {
 
 		try {
 			
-			preparedstatement.setString(2, name);
+			preparedstatement.setString(1, name);
 			int result = preparedstatement.executeUpdate();
 			out.println("Product Created. result = " + result);
 			

@@ -21,7 +21,7 @@ public class Subject {
 	
 	private Set<Teacher> teacher = new HashSet<>();
 
-	private ClassRoom classroom ;
+	private String classroom ;
 
 	private Set<Student> students = new HashSet<>(); 
 
@@ -34,11 +34,11 @@ public class Subject {
 	}
 
 
-	public ClassRoom getClassroom() {
+	public String getClassroom() {
 		return classroom;
 	}
 
-	public void setClassroom(ClassRoom classroom) {
+	public void setClassroom(String classroom) {
 		this.classroom = classroom;
 	}
 
@@ -56,7 +56,7 @@ public class Subject {
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.sub_id = id;
 	}
 
 	public String getName() {
@@ -68,7 +68,11 @@ public class Subject {
 	}
 	
 	//constructors
-	public Subject() {}
+	public Subject(int id, String name2, String clss) {
+		this.name= name2;
+		this.sub_id=id;
+		this.classroom= clss;
+	}
 	public Subject(String name) {
 		this.name = name;
 	}

@@ -50,7 +50,7 @@ public class AddTeacherServlet extends HttpServlet {
 			String dbpassword = context.getInitParameter("dbpassword");
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(dburl, dbuser, dbpassword);
-			preparedstatement = con.prepareStatement("insert into teacher values (?,?)");
+			preparedstatement = con.prepareStatement("insert into teahcer (teahcer_name,teacher_email) values (?,?)");
 			teacherUtil = new TeacherUtil(datasource);
 		} catch (Exception e) {
 			throw new ServletException(e);
@@ -61,18 +61,18 @@ public class AddTeacherServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String name = request.getParameter("teacher_name");
-		String clss = request.getParameter("class");
+		String email = request.getParameter("teacher_email");
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
 
-		if (!isValidInput(name, false) || !isValidInput(clss, false)) {
+		if (!isValidInput(name, false) || !isValidInput(email, false)) {
 			out.println("Please enter valid input.");
 			return;
 		}
 
 		try {
 			preparedstatement.setString(1, name);
-			preparedstatement.setString(2, clss);
+			preparedstatement.setString(2, email);
 			
 			int result = preparedstatement.executeUpdate();
 			out.println("Product Created. result = " + result);
@@ -82,7 +82,7 @@ public class AddTeacherServlet extends HttpServlet {
 		}
 
 		teacherUtil.getTeachers();
-		request.setAttribute("teacher_tlist", teacherUtil.getTeachers());
+		request.setAttribute("teacher_list", teacherUtil.getTeachers());
 
 		RequestDispatcher d = request.getRequestDispatcher("/showteacher.jsp");
 		d.forward(request, response);
